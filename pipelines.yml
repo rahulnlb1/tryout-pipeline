@@ -1,15 +1,19 @@
 resources:
-  - name: myAppRepo
+  - name: myGitRepo
     type: GitRepo
     configuration:
-      gitProvider: GitHub               # Change to your integration
-      path: rahulnlb1/tryout-pipeline   # Change to your repo
+      gitProvider: GitHub                       # <- Change to your integration name
+      path: rahulnlb1/tryout-pipeline   # <- Change to your forked repo
+      branches:
+        include: master
+ 
   - name: myBuildInfo
     type: BuildInfo
     configuration:
       sourceArtifactory: arti                       # <- Change to your integration name
       buildName: SampleApp
-      buildNumber: 1      
+      buildNumber: 1        
+      
 pipelines: 
   - name: basic_pipeline
     configuration:
@@ -74,7 +78,7 @@ pipelines:
             - name: step_3
             - name: step_4 
           integrations:
-            - name: my_github            # <- Change to your integration name
+            - name: GitHub            # <- Change to your integration name
         execution:
           onExecute:
-            - 'curl -H "Authorization: token ${int_my_github_token}" ${int_my_github_url}/rate_limit'   # <- Change to your integration name
+            - 'curl -H "Authorization: token ${int_GitHub_token}" ${int_GitHub_url}/rate_limit'   # <- Change to your integration name
